@@ -2,16 +2,9 @@
 
 ## Architecture
 
-```
-┌──────────────────────┐     ┌──────────────────────┐     ┌──────────────────────┐
-│    server-front      │────▶│    server-back       │────▶│    server-dba        │
-│   192.168.33.13      │     │   192.168.33.11      │     │   192.168.33.12      │
-│                      │     │                      │     │                      │
-│  Nginx + Angular 17  │     │  Spring Boot 3       │     │  MySQL 8             │
-│  Port hôte : 8080    │     │  JDK 17              │     │  Port : 3306         │
-│                      │     │  Port hôte : 8083    │     │                      │
-└──────────────────────┘     └──────────────────────┘     └──────────────────────┘
-```
+````
+
+    server-front      ────▶    server-back       ────▶    server-dba
 
 ---
 
@@ -28,7 +21,7 @@
 vagrant up server-dba
 vagrant up server-back
 vagrant up server-front
-```
+````
 
 ---
 
@@ -45,7 +38,7 @@ sudo apt-get update -y
 sudo apt-get install -y mysql-server
 ```
 
-![Installation MySQL](installation_de_mysql.png)
+![alt text](<../Desktop/Devops/Lab/TP3/img-back/installation de mysql.png>)
 
 ```bash
 sudo systemctl start mysql
@@ -61,32 +54,19 @@ FLUSH PRIVILEGES;
 EXIT;
 ```
 
-```bash
+````bash
 # Autoriser les connexions distantes
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 # Modifier : bind-address = 0.0.0.0
 
 sudo systemctl restart mysql
-```
 
-### Informations de connexion
-
-| Paramètre | Valeur          |
-|-----------|-----------------|
-| Host      | 192.168.33.12   |
-| Port      | 3306            |
-| Base      | appdb           |
-| User      | appuser         |
-| Password  | AppPassword123! |
-
----
-
-## Étape 3 — Déploiement de server-back (Spring Boot)
+## Étape 3 — Déploiement de server-back
 
 ```bash
 vagrant ssh server-back
 sudo apt-get update -y
-```
+````
 
 ### Installation de JDK 17
 
@@ -94,7 +74,7 @@ sudo apt-get update -y
 sudo apt-get install -y openjdk-17-jdk
 ```
 
-![Installation JDK 17](installation_jdk.png)
+![alt text](<../Desktop/Devops/Lab/TP3/img-back/installation jdk.png>)
 
 ```bash
 sudo apt-get install -y maven
@@ -125,7 +105,7 @@ mvn test
 
 ---
 
-## Étape 4 — Déploiement de server-front (Angular + Nginx)
+## Étape 4 — Déploiement de server-front
 
 ```bash
 vagrant ssh server-front
@@ -159,7 +139,7 @@ sudo systemctl restart nginx
 ## Accès aux applications
 
 | Service          | URL                                |
-|------------------|------------------------------------|
+| ---------------- | ---------------------------------- |
 | Frontend Angular | http://localhost:8080              |
 | API REST         | http://localhost:8083/api/produits |
 
